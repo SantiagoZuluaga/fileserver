@@ -210,6 +210,7 @@ func RunTCPClient() {
 			}
 			fmt.Println("> ", msg.Message)
 		case "/exit":
+			fmt.Println("Bye, come back soon")
 			connection.Close()
 			return
 		default:
