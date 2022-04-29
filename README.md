@@ -22,7 +22,8 @@ go run main.go client
 /channels
 ```
 
-#### Subscribe to channel X (If you subscribe to a channel, you will not able to use other commands. To exit, finish the console process)
+#### Subscribe to channel X
+If you subscribe to a channel, you will not able to use other commands. To exit, finish the console process
 ```
 /subscribe CHANNEL
 ```
