@@ -12,6 +12,11 @@ func main() {
 
 	args := os.Args[1:]
 
+	if len(args) == 0 {
+		fmt.Println("Command is required")
+		return
+	}
+
 	switch args[0] {
 	case "client":
 		client.RunTCPClient()

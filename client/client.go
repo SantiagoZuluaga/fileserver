@@ -41,7 +41,6 @@ func GetFile(channel string, name string, content []byte) error {
 func LoadFile(path string) (string, int64, []byte, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		fmt.Println(err)
 		return "", 0, nil, err
 	}
 	defer file.Close()
@@ -65,9 +64,8 @@ func LoadFile(path string) (string, int64, []byte, error) {
 }
 
 func RunTCPClient() {
-	fmt.Println("CLIENT FILE SERVER")
 
-	connection, err := net.Dial("tcp", fmt.Sprintf("%s:%s", config.TCP_HOST, config.TCP_PORT))
+	connection, err := net.Dial("tcp", fmt.Sprintf("%s:%s", config.GetConfig().Host, config.GetConfig().Port))
 	if err != nil {
 		fmt.Println(err)
 		connection.Close()
@@ -214,7 +212,7 @@ func RunTCPClient() {
 			connection.Close()
 			return
 		default:
-			fmt.Println("Invalid command.\nCommands available:\n/username USERNAME\n/send CHANNEL FILE_NAME\n/suscribe CHANNEL_NAME\n4. /quit")
+			fmt.Println("Invalid command.\nCommands available:\n1. /username USERNAME\n2. /send CHANNEL FILE_NAME\n3. /suscribe CHANNEL_NAME\n4. /quit")
 		}
 	}
 }

@@ -53,7 +53,9 @@ func (user *User) connectionHandler() {
 			if err == io.EOF {
 				fmt.Println("User disconnected: " + user.Connection.RemoteAddr().String())
 				delete(users, user.Connection.RemoteAddr().String())
-				delete(channels[user.CurrentChannel.Name].Members, user.Connection.RemoteAddr())
+				if user.CurrentChannel != nil {
+					delete(channels[user.CurrentChannel.Name].Members, user.Connection.RemoteAddr())
+				}
 				return
 			}
 			fmt.Println(err)
@@ -74,6 +76,7 @@ func (user *User) connectionHandler() {
 				continue
 			}
 
+			user.Username = msg.Argumment
 			err := json.NewEncoder(user.Connection).Encode(models.ServerMessage{
 				Message: fmt.Sprintf("Welcome: %s", msg.Argumment),
 			})
@@ -187,9 +190,7 @@ func (user *User) connectionHandler() {
 
 func RunTCPServer() {
 
-	fmt.Println("SERVER FILE SERVER")
-
-	server, err := net.Listen("tcp", fmt.Sprintf("%s:%s", config.TCP_HOST, config.TCP_PORT))
+	server, err := net.Listen("tcp", fmt.Sprintf("%s:%s", config.GetConfig().Host, config.GetConfig().Port))
 	if err != nil {
 		fmt.Println(err)
 		return
